@@ -22,7 +22,7 @@ pipeline {
 def getGitTag(){
     return node {
     def tags = ''
-    withCredentials([usernamePassword(credentialsId: 'bvc-sa-gmo-github', 
+    withCredentials([usernamePassword(credentialsId: 'personal-token', 
                                       usernameVariable: 'GH_ENTERPRISE_TOKEN_USR',
                                       passwordVariable: 'GH_ENTERPRISE_TOKEN_PSW')]){
         tags = sh(script: '''curl -s -L \
