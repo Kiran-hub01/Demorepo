@@ -37,4 +37,3 @@ def getGitTag(){
     return prefix_release.join("\n")
     }
 }
-//  echo "testing"
