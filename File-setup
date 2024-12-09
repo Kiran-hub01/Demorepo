@@ -1,0 +1,96 @@
+properties([
+    parameters([
+        [$class: 'ChoiceParameter', 
+            choiceType: 'PT_SINGLE_SELECT', 
+            description: '', 
+            filterLength: 1, 
+            filterable: false, 
+            name: 'environment',
+            script: 
+                [$class: 'GroovyScript', 
+                fallbackScript: 
+                [classpath: [], 
+                sandbox: false, 
+                script: ''], 
+                script: 
+                [classpath: [], 
+                sandbox: false, 
+                script: 'return [\'dev\', \'qa\',\'prod\']']]],
+        [$class: 'CascadeChoiceParameter', 
+            choiceType: 'PT_SINGLE_SELECT', 
+            description: '', 
+            filterLength: 1, 
+            filterable: false, 
+            name: 'release_version',
+            script: 
+                [$class: 'GroovyScript', 
+                fallbackScript: 
+                [classpath: [], 
+                sandbox: false, 
+                script: ''], 
+                script: 
+                [classpath: [], 
+                sandbox: false, 
+                script: '''
+                    import jenkins.*
+                    import jenkins.model.* 
+                    import hudson.*
+                    import hudson.model.*
+                    import groovy.json.*
+                    
+                    def jenkinsCredentials = com.cloudbees.plugins.credentials.CredentialsProvider.lookupCredentials(
+                            com.cloudbees.plugins.credentials.Credentials.class,
+                            Jenkins.instance,
+                            null,
+                            null
+                        );
+                    def creds
+                    for (creds2 in jenkinsCredentials) {
+                        if(creds2.id == "personal-token"){
+                          creds = creds2
+                        }
+                        }
+                    
+                    // return[creds.password]
+                    
+                    
+                    HttpURLConnection connection;
+                    def text;
+                        try {
+                            URL url = new URL('https://api.github.com/repos/Kiran-hub01/Demorepo/releases')
+                            connection = url.openConnection()
+                              // connection.setRequestMethod("GET")
+                            connection.setRequestProperty("Authorization", "Bearer ${creds.password}");
+                            connection.setRequestProperty("Accept", "application/vnd.github.v3+json");
+                            connection.setDoOutput(true)
+                            text = connection.inputStream.text
+                            def json = new JsonSlurper().parseText(text);
+                            def releaseNames = json.collect {release -> "release-${release.name}"}
+                            def releaseVersions = new JsonBuilder(releaseNames).toPrettyString()
+                            return releaseNames
+                            }
+                        catch(Exception e) {
+                            return ["error: "]
+                        }
+                    finally {
+                            connection.disconnect()
+                        }
+                '''
+                ]]]
+        ])
+    ])
+    pipeline {
+    agent any
+    parameters {
+        booleanParam(name: 'enforceParams', defaultValue: false,
+            description: 'Should some env variables be overridden by parameters (for manually triggered builds)')
+        booleanParam(name: 'DeployPROD', defaultValue: false, description: 'Should PROD be deployed with git tag provided?')
+    }
+    stages {
+        stage('prepare') {
+            steps {
+                echo "${params.release_version}"
+            }
+        }
+    }
+}
