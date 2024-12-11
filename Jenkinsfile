@@ -1,8 +1,3 @@
-properties([
-    parameter([
-        gitParameter(name: 'deployBranch', branchFilter: 'origin/(release/.*)', defaultValue: 'main', sortMode: 'DESCENDING_SMART', type: 'PT_BRANCH')
-        ])
-    ])
 pipeline {
     agent any
     parameters {
@@ -14,6 +9,7 @@ pipeline {
             choices: getGitTag(),
             description: 'Select the Git release version to deploy'
         )
+        gitParameter branchFilter: 'origin/(.*)', defaultValue: 'main', name: 'BRANCH', type: 'PT_BRANCH'
 
     }
     stages {
