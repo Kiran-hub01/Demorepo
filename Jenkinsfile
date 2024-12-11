@@ -1,3 +1,8 @@
+properties([
+    parameter([
+        gitParameter(name: 'deployBranch', branchFilter: 'origin/(release/.*)', defaultValue: 'main', sortMode: 'DESCENDING_SMART', type: 'PT_BRANCH')
+        ])
+    ])
 pipeline {
     agent any
     parameters {
