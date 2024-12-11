@@ -9,7 +9,7 @@ pipeline {
             choices: getGitTag(),
             description: 'Select the Git release version to deploy'
         )
-        gitParameter branchFilter: 'origin/(.*)', defaultValue: 'main', name: 'BRANCH', type: 'PT_BRANCH'
+        gitParameter branchFilter: 'origin/(release/.*)', defaultValue: 'main', name: 'BRANCH', type: 'PT_BRANCH'
 
     }
     stages {
