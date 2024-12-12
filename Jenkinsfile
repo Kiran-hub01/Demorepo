@@ -4,11 +4,11 @@ pipeline {
         booleanParam(name: 'enforceParams', defaultValue: false,
             description: 'Should some env variables be overridden by parameters (for manually triggered builds)')
         booleanParam(name: 'DeployPROD', defaultValue: false, description: 'Should PROD be deployed with git tag provided?')
-        choice(
-            name: 'PRODReleaseVersionToDeploy',
-            choices: getGitTag(),
-            description: 'Select the Git release version to deploy'
-        )
+        // choice(
+        //     name: 'PRODReleaseVersionToDeploy',
+        //     choices: getGitTag(),
+        //     description: 'Select the Git release version to deploy'
+        // )
         gitParameter branchFilter: 'origin/(release/.*)', defaultValue: 'main', name: 'ReleaseBranch', type: 'PT_BRANCH'
 
     }
