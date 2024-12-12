@@ -15,7 +15,7 @@ pipeline {
     stages {
         stage('prepare') {
             steps {
-                echo "${params.PRODReleaseVersionToDeploy}"
+                echo "${params.PRODReleaseVersionToDeploy}."
             }
         }
     }
