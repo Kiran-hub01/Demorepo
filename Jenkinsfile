@@ -24,6 +24,7 @@ pipeline {
                     userRemoteConfigs: scm.userRemoteConfigs
                 ])
                 script {
+                    echo "${params.ReleaseBranch}"
                     env.RELATED_TAG = sh(script: "git describe --tags remote/origin/${params.ReleaseBranch}", returnStdout: true).trim()
                     echo "Associated Tag: ${env.RELATED_TAG}"
                 }
