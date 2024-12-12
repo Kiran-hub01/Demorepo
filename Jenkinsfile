@@ -23,8 +23,14 @@ pipeline {
                     extensions: [[$class: 'CloneOption', noTags: false, reference: '', shallow: false]],
                     userRemoteConfigs: scm.userRemoteConfigs
                 ])
-                script {
-                    echo "${params.ReleaseBranch}"
+                 script {
+                    // Print all branches
+                    sh """
+                    echo "Listing all branches (local and remote):"
+                    git branch -a
+                    """
+
+                    // Fetch the associated tag
                     env.RELATED_TAG = sh(script: "git describe --tags", returnStdout: true).trim()
                     echo "Associated Tag: ${env.RELATED_TAG}"
                 }
