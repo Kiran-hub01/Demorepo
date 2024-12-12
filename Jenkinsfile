@@ -18,7 +18,7 @@ pipeline {
                 cleanWs()
                 checkout([
                     $class: 'GitSCM',
-                    branches: [[name: "${params.ReleaseBranch}"]],
+                    branches: scm.branches,
                     doGenerateSubmoduleConfigurations: scm.doGenerateSubmoduleConfigurations,
                     extensions: [[$class: 'CloneOption', noTags: false, reference: '', shallow: false]],
                     userRemoteConfigs: scm.userRemoteConfigs
