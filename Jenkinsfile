@@ -16,13 +16,6 @@ pipeline {
         stage('prepare') {
             steps {
                 cleanWs()
-                checkout([
-                    $class: 'GitSCM',
-                    branches: [[name: "${params.ReleaseBranch}"]],
-                    doGenerateSubmoduleConfigurations: scm.doGenerateSubmoduleConfigurations,
-                    extensions: [[$class: 'CloneOption', noTags: false, reference: '', shallow: false]],
-                    userRemoteConfigs: scm.userRemoteConfigs
-                ])
                 script {
                     echo "${params.ReleaseBranch}"
                     env.RELATED_TAG = sh(script: "git describe --tags remote/origin/${params.ReleaseBranch}", returnStdout: true).trim()
