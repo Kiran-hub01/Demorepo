@@ -26,7 +26,7 @@ pipeline {
                  script {
                     // Print all branches
                     sh """
-                    echo "Listing all branches (local and remote):"
+                    echo "Listing all branchess (local and remote):"
                     git branch -a
                     """
 
