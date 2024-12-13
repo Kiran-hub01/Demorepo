@@ -4,7 +4,7 @@ pipeline {
         booleanParam(name: 'DeployPROD', defaultValue: false, description: 'Should PROD be deployed with git tag provided?')
         booleanParam(name: 'branch', defaultValue: false, description: 'to enable branch release')
         gitParameter branchFilter: 'origin/(release-.*)', defaultValue: 'main', name: 'ReleaseBranch', type: 'PT_BRANCH', sortMode: 'DESCENDING_SMART'
-        booleanParam(name: 'tag', defaultValue: false, description: 'to enable tag')
+        // booleanParam(name: 'tag', defaultValue: false, description: 'to enable tag')
         gitParameter defaultValue: 'main', name: 'TAG', type: 'PT_TAG', sortMode: 'DESCENDING_SMART'
     }
     stages {
