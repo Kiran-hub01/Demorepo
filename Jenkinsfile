@@ -4,11 +4,14 @@ pipeline {
         booleanParam(name: 'enforceParams', defaultValue: false,
             description: 'Should some env variables be overridden by parameters (for manually triggered builds)')
         booleanParam(name: 'DeployPROD', defaultValue: false, description: 'Should PROD be deployed with git tag provided?')
-        // choice(
-        //     name: 'PRODReleaseVersionToDeploy',
-        //     choices: getGitTag(),
-        //     description: 'Select the Git release version to deploy'
-        // )
+        string(
+            name: 'tagName', defaultValue: '',
+            description: 'enter the git tag name to create the release branch eg. "1.103.0" '
+        )
+        string(
+            name: 'releaseBranchName', defaultValue: '',
+            description: 'Enter the release branch name to be eg. "release/1.0"'
+        )
         gitParameter branchFilter: 'origin/(release/.*)', defaultValue: 'main', name: 'ReleaseBranch', type: 'PT_BRANCH', sortMode: 'DESCENDING_SMART'
 
     }
@@ -29,7 +32,11 @@ pipeline {
                     echo "Listing all branchess (local and remote):"
                     git branch -a
                     """
-
+                    """
+                    echo "Creating the release branch"
+                    git checkout -b ${releaseBranchName} ${tagName}
+                    git push origin ${releaseBranchName}
+                    """
                     // Fetch the associated tag
                     env.RELATED_TAG = sh(script: "git describe --tags remotes/origin/${params.ReleaseBranch}", returnStdout: true).trim()
                     echo "Associated Tag: ${env.RELATED_TAG}"
