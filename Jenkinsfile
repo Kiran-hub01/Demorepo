@@ -1,8 +1,6 @@
 pipeline {
     agent any
     parameters {
-        booleanParam(name: 'enforceParams', defaultValue: false,
-            description: 'Should some env variables be overridden by parameters (for manually triggered builds)')
         booleanParam(name: 'DeployPROD', defaultValue: false, description: 'Should PROD be deployed with git tag provided?')
         gitParameter branchFilter: 'origin/(release/.*)', defaultValue: 'main', name: 'ReleaseBranch', type: 'PT_BRANCH', sortMode: 'DESCENDING_SMART'
         gitParameter defaultValue: 'main', name: 'TAG', type: 'PT_TAG', sortMode: 'DESCENDING_SMART'
@@ -16,13 +14,21 @@ pipeline {
                     branches: scm.branches,
                     doGenerateSubmoduleConfigurations: scm.doGenerateSubmoduleConfigurations,
                     extensions: [[$class: 'CloneOption', noTags: false, reference: '', shallow: false]],
-                    userRemoteConfigs: scm.userRemoteConfigs
+                    userRemoteConfigs: [[
+                        url: 'https://github.com/Kiran-hub01/Demorepo.git',
+                        credentialsID: 'Kiran-hub01'
+                        ]]
                 ])
                  script {
                     // Print all branches
+                     env.RELATED_TAG = sh(script: "git describe --tags remotes/origin/${params.ReleaseBranch}", returnStdout: true).trim()
+                    echo "Associated Tag: ${env.RELATED_TAG}"
                     sh """
                     git config --global --unset credential.helper
                     git config --global credential.helper ""
+                    echo "config list"
+                    git config --list
+                    git remote -v
                     echo "Listing all branchess (local and remote):"
                     git branch -a
                     git remote -v
