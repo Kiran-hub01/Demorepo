@@ -29,6 +29,7 @@ pipeline {
                     echo "config list"
                     git config --list
                     git remote -v
+                    git ls-remote https://github.com/Kiran-hub01/Demorepo.git
                     echo "Listing all branchess (local and remote):"
                     git branch -a
                     git remote -v
