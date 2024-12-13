@@ -3,7 +3,7 @@ pipeline {
     parameters {
         booleanParam(name: 'DeployPROD', defaultValue: false, description: 'Should PROD be deployed with git tag provided?')
         booleanParam(name: 'branch', defaultValue: false, description: 'to enable branch release')
-        gitParameter branchFilter: 'origin/(release-.*)', defaultValue: 'main', name: 'ReleaseBranch', type: 'PT_BRANCH', sortMode: 'DESCENDING_SMART'
+        gitParameter branchFilter: 'origin/(release-.*)', defaultValue: 'main', name: 'ReleaseBranch', type: 'PT_BRANCH', sortMode: 'DESCENDING_SMART', visible: 'branch==true'
         booleanParam(name: 'tag', defaultValue: false, description: 'to enable tag')
         gitParameter defaultValue: 'main', name: 'TAG', type: 'PT_TAG', sortMode: 'DESCENDING_SMART'
     }
@@ -22,9 +22,6 @@ pipeline {
                         ]]
                 ])
                  script {
-                    // Print all branches
-                     env.RELATED_TAG = sh(script: "git describe --tags remotes/origin/${params.ReleaseBranch}", returnStdout: true).trim()
-                    echo "Associated Tag: ${env.RELATED_TAG}"
                     sh """
                     echo "Listing all branchess (local and remote):"
                     git branch -a
