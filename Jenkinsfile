@@ -21,6 +21,7 @@ pipeline {
                  script {
                     // Print all branches
                     sh """
+                    git config --list
                     git remote set-url origin https://Kiran-hub01@github.com/Kiran-hub01/Demorepo.git
                     echo "Listing all branchess (local and remote):"
                     git branch -a
@@ -29,8 +30,6 @@ pipeline {
                     echo "Creating the release branch"
                     git checkout -b "release-${TAG}"
                     git push origin "release-${TAG}"
-
-                    
                     """
                     // Fetch the associated tag
                     env.RELATED_TAG = sh(script: "git describe --tags remotes/origin/${params.ReleaseBranch}", returnStdout: true).trim()
