@@ -21,9 +21,6 @@ pipeline {
                  script {
                     // Print all branches
                     sh """
-                    git config --global --unset user.name
-                    git config --global --unset user.email
-                    git config --global --unset-all credential.helper
                     git credential-cache exit
                     git config --global user.name "Kiran-hub01"
                     git config --global user.mail "kiranbabu3005@gmail.com"
