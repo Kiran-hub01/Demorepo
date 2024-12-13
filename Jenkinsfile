@@ -21,12 +21,8 @@ pipeline {
                  script {
                     // Print all branches
                     sh """
-                    git credential-cache exit
-                    git config --global user.name "Kiran-hub01"
-                    git config --global user.mail "kiranbabu3005@gmail.com"
-                    git config --global credential.helper store
-                    git config --list
-                    git remote set-url origin https://Kiran-hub01@github.com/Kiran-hub01/Demorepo.git
+                    git config --global --unset credential.helper
+                    git config --global credential.helper ""
                     echo "Listing all branchess (local and remote):"
                     git branch -a
                     git remote -v
