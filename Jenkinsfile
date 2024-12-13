@@ -13,7 +13,7 @@ pipeline {
             description: 'Enter the release branch name to be eg. "release/1.0"'
         )
         gitParameter branchFilter: 'origin/(release/.*)', defaultValue: 'main', name: 'ReleaseBranch', type: 'PT_BRANCH', sortMode: 'DESCENDING_SMART'
-
+        gitParameter defaultValue: 'main', name: 'TAG', type: 'PT_TAG', sortMode: 'DESCENDING_SMART'
     }
     stages {
         stage('prepare') {
