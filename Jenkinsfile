@@ -23,6 +23,14 @@ pipeline {
                 ])
                  script {
                     sh """
+                    git config --local --unset credential.helper || true
+                    git config --global --unset credential.helper || true
+                    git config --system --unset credential.helper || true
+                    git config --global credential.helper store
+                    git remote set-url origin git@github.com:Kiran-hub01/Demorepo.git
+                    echo "config list"
+                    git config --list
+                    git remote -v
                     echo "Listing all branchess (local and remote):"
                     git branch -a
                     git remote -v
