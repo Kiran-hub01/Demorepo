@@ -24,7 +24,9 @@ pipeline {
                      env.RELATED_TAG = sh(script: "git describe --tags remotes/origin/${params.ReleaseBranch}", returnStdout: true).trim()
                     echo "Associated Tag: ${env.RELATED_TAG}"
                     sh """
-                    git config --global --unset credential.helper
+                    git config --local --unset credential.helper || true
+                    git config --global --unset credential.helper || true
+                    git config --system --unset credential.helper || true
                     git config --global credential.helper store
                     git remote set-url origin https://Kiran-hub01@github.com/Kiran-hub01/Demorepo.git
                     echo "config list"
