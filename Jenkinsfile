@@ -21,6 +21,7 @@ pipeline {
                  script {
                     // Print all branches
                     sh """
+                    git remote set-url origin https://Kiran-hub01@github.com/Kiran-hub01/Demorepo.git
                     echo "Listing all branchess (local and remote):"
                     git branch -a
                     git remote -v
