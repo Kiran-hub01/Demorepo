@@ -25,11 +25,11 @@ pipeline {
                     echo "Associated Tag: ${env.RELATED_TAG}"
                     sh """
                     git config --global --unset credential.helper
-                    git config --global credential.helper ""
+                    git config --global credential.helper store
+                    git remote set-url origin https://Kiran-hub01@github.com/Kiran-hub01/Demorepo.git
                     echo "config list"
                     git config --list
                     git remote -v
-                    git ls-remote https://github.com/Kiran-hub01/Demorepo.git
                     echo "Listing all branchess (local and remote):"
                     git branch -a
                     git remote -v
