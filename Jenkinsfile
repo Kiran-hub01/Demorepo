@@ -26,6 +26,7 @@ pipeline {
                     sh """
                     git config --global --unset credential.helper
                     git config --global credential.helper store
+                    echo "https://Kiran-hub01:${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}@github.com" > ~/.git-credentials
                     git remote set-url origin https://Kiran-hub01@github.com/Kiran-hub01/Demorepo.git
                     echo "config list"
                     git config --list
