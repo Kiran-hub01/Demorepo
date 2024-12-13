@@ -23,8 +23,6 @@ pipeline {
                     sh """
                     echo "Listing all branchess (local and remote):"
                     git branch -a
-                    """
-                    """
                     echo "Creating the release branch"
                     git checkout -b "release-${TAG}"
                     git push origin "release-${TAG}"
