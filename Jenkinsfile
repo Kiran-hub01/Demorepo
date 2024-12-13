@@ -23,9 +23,13 @@ pipeline {
                     sh """
                     echo "Listing all branchess (local and remote):"
                     git branch -a
+                    git remote -v
+                    set -x
                     echo "Creating the release branch"
                     git checkout -b "release-${TAG}"
                     git push origin "release-${TAG}"
+
+                    
                     """
                     // Fetch the associated tag
                     env.RELATED_TAG = sh(script: "git describe --tags remotes/origin/${params.ReleaseBranch}", returnStdout: true).trim()
