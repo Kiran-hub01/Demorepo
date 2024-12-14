@@ -42,7 +42,7 @@ pipeline {
                         git remote -v
                         set -x
                         echo "Creating the release branch"
-                        git checkout -b "${env.CUSTOMRELEASEBRANCHNAME}"
+                        git checkout -b "${env.CUSTOMRELEASEBRANCHNAME}" "${params.TAG}"
                         git push origin "${env.CUSTOMRELEASEBRANCHNAME}"
                         """
                         env.FINALRELEASEBRANCH = "${env.CUSTOMRELEASEBRANCHNAME}"
