@@ -25,7 +25,7 @@ pipeline {
                 ])
                  script {
                      if (params.Branch) {
-                         sh "echo "${params.ReleaseBranch}""
+                         echo "${params.ReleaseBranch}"
                          env.FINALRELEASEBRANCH = ${params.ReleaseBranch}
                      } else {
                          sh """
