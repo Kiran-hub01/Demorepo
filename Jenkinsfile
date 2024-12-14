@@ -7,7 +7,7 @@ pipeline {
         gitParameter defaultValue: 'main', name: 'TAG', type: 'PT_TAG', sortMode: 'DESCENDING_SMART'
     }
     environment {
-        CUSTOMRELEASEBRANCHNAME = 'release-${params.TAG}'
+        CUSTOMRELEASEBRANCHNAME = "release-${params.TAG}"
     }
     stages {
         stage('prepare') {
