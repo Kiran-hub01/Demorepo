@@ -8,6 +8,7 @@ pipeline {
     }
     environment {
         CUSTOMRELEASEBRANCHNAME = 'release-${params.TAG}'
+        PARAMRELEASEBRANCH = '
     }
     stages {
         stage('prepare') {
@@ -26,7 +27,7 @@ pipeline {
                  script {
                      if (params.Branch) {
                          echo "${params.ReleaseBranch}"
-                         env.FINALRELEASEBRANCH = ${params.ReleaseBranch}
+                         env.FINALRELEASEBRANCH = "${params.ReleaseBranch}"
                      } else {
                          sh """
                         git config --local --unset credential.helper || true
@@ -45,7 +46,7 @@ pipeline {
                         git checkout -b "${env.CUSTOMRELEASEBRANCHNAME}"
                         git push origin "${env.CUSTOMRELEASEBRANCHNAME}"
                         """
-                        env.FINALRELEASEBRANCH = ${env.CUSTOMRELEASEBRANCHNAME}
+                        env.FINALRELEASEBRANCH = "${env.CUSTOMRELEASEBRANCHNAME}"
                      }
                     
                     // Fetch the associated tag
