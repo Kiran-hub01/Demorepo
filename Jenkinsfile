@@ -8,7 +8,6 @@ pipeline {
     }
     environment {
         CUSTOMRELEASEBRANCHNAME = 'release-${params.TAG}'
-        PARAMRELEASEBRANCH = '
     }
     stages {
         stage('prepare') {
