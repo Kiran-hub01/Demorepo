@@ -49,7 +49,7 @@ pipeline {
                      }
                     
                     // Fetch the associated tag
-                    env.RELATED_TAG = sh(script: "git describe --tags remotes/origin/${env.CUSTOMRELEASEBRANCHNAME}", returnStdout: true).trim()
+                    env.RELATED_TAG = sh(script: "git describe --tags remotes/origin/${env.FINALRELEASEBRANCH}", returnStdout: true).trim()
                     echo "Associated Tag: ${env.RELATED_TAG}"
                 }
             }
