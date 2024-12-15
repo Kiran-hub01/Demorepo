@@ -32,7 +32,7 @@ pipeline {
                          sh """
                         echo "Creating the release branch"
                         git checkout -b "${env.CUSTOMRELEASEBRANCHNAME}" "${params.TAG}"
-                        git push origin "${env.CUSTOMRELEASEBRANCHNAME}"
+                        git push https://${git_creds}:${git_creds_PSW}@github.com/Kiran-hub01/Demorepo.git "${env.CUSTOMRELEASEBRANCHNAME}"
                         """
                         env.FINALRELEASEBRANCH = "${env.CUSTOMRELEASEBRANCHNAME}"
                      }
