@@ -29,10 +29,6 @@ pipeline {
                          env.FINALRELEASEBRANCH = "${params.ReleaseBranch}"
                      } else {
                          sh """
-                        //  git config --local --unset credential.helper || true
-                        // git config --global --unset credential.helper || true
-                        // git config --system --unset credential.helper || true
-                        // git config --global credential.helper store
                         git remote set-url origin git@github.com:Kiran-hub01/Demorepo.git
                         echo "config list"
                         git config --list
