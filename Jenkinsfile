@@ -29,14 +29,6 @@ pipeline {
                          env.FINALRELEASEBRANCH = "${params.ReleaseBranch}"
                      } else {
                          sh """
-                        git remote set-url origin git@github.com:Kiran-hub01/Demorepo.git
-                        echo "config list"
-                        git config --list
-                        git remote -v
-                        echo "Listing all branchess (local and remote):"
-                        git branch -a
-                        git remote -v
-                        set -x
                         echo "Creating the release branch"
                         git checkout -b "${env.CUSTOMRELEASEBRANCHNAME}" "${params.TAG}"
                         git push origin "${env.CUSTOMRELEASEBRANCHNAME}"
