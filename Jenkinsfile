@@ -37,10 +37,10 @@ pipeline {
                             usernameVariable: 'GIT_USERNAME',
                             passwordVariable: 'GIT_PASSWORD'
                             )]){
-                            sh
-                                """
-                                git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/Kiran-hub01/Demorepo.git ${env.CUSTOMRELEASEBRANCHNAME}
-                                """
+                                sh
+                                    """
+                                    git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/Kiran-hub01/Demorepo.git ${env.CUSTOMRELEASEBRANCHNAME}
+                                    """
                         
                      }
                          env.FINALRELEASEBRANCH = "${env.CUSTOMRELEASEBRANCHNAME}"
