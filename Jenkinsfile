@@ -43,6 +43,7 @@ pipeline {
                                 """
                         env.FINALRELEASEBRANCH = "${env.CUSTOMRELEASEBRANCHNAME}"
                      }
+                     }
                     
                     // Fetch the associated tag
                     env.RELATED_TAG = sh(script: "git describe --tags remotes/origin/${env.FINALRELEASEBRANCH}", returnStdout: true).trim()
