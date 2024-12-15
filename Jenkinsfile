@@ -31,20 +31,18 @@ pipeline {
                          sh """
                         echo "Creating the release branch"
                         git checkout -b "${env.CUSTOMRELEASEBRANCHNAME}" "${params.TAG}"
-                        git push origin "${env.CUSTOMRELEASEBRANCHNAME}"
                         """
-                     //    """
-                     //    withCredentials([usernamePassword(
-                     //        credentialsId: 'Kiran-hub01',
-                     //        usernameVariable: 'GIT_USERNAME',
-                     //        passwordVariable: 'GIT_PASSWORD'
-                     //        )]){
-                     //        sh
-                     //            """
-                     //            git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/Kiran-hub01/Demorepo.git ${env.CUSTOMRELEASEBRANCHNAME}
-                     //            """
-                     //    
-                     // }
+                        withCredentials([usernamePassword(
+                            credentialsId: 'Kiran-hub01',
+                            usernameVariable: 'GIT_USERNAME',
+                            passwordVariable: 'GIT_PASSWORD'
+                            )]){
+                            sh
+                                """
+                                git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/Kiran-hub01/Demorepo.git ${env.CUSTOMRELEASEBRANCHNAME}
+                                """
+                        
+                     }
                          env.FINALRELEASEBRANCH = "${env.CUSTOMRELEASEBRANCHNAME}"
                      }
                     
