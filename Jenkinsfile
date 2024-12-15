@@ -30,6 +30,7 @@ pipeline {
                          env.FINALRELEASEBRANCH = "${params.ReleaseBranch}"
                      } else {
                          sh """
+                         git remote add origin git@github.com:Kiran-hub01/Demorepo.git
                          git config -l
                          git remote -v
                         echo "Creating the release branch"
