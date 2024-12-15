@@ -29,12 +29,11 @@ pipeline {
                          echo "${params.ReleaseBranch}"
                          env.FINALRELEASEBRANCH = "${params.ReleaseBranch}"
                      } else {
-                                sh
-                                    """
-                                    echo "Creating the release branch"
-                                    git checkout -b "${env.CUSTOMRELEASEBRANCHNAME}" "${params.TAG}"
-                                    git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/Kiran-hub01/Demorepo.git ${env.CUSTOMRELEASEBRANCHNAME}
-                                    """
+                         sh """
+                        echo "Creating the release branch"
+                        git checkout -b "${env.CUSTOMRELEASEBRANCHNAME}" "${params.TAG}"
+                        git push origin "${env.CUSTOMRELEASEBRANCHNAME}"
+                        """
                         env.FINALRELEASEBRANCH = "${env.CUSTOMRELEASEBRANCHNAME}"
                      }
                     
