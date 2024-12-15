@@ -29,20 +29,35 @@ pipeline {
                          env.FINALRELEASEBRANCH = "${params.ReleaseBranch}"
                      } else {
                          sh """
+                         git config --local --unset credential.helper || true
+                        git config --global --unset credential.helper || true
+                        git config --system --unset credential.helper || true
+                        git config --global credential.helper store
+                        git remote set-url origin git@github.com:Kiran-hub01/Demorepo.git
+                        echo "config list"
+                        git config --list
+                        git remote -v
+                        echo "Listing all branchess (local and remote):"
+                        git branch -a
+                        git remote -v
+                        set -x
                         echo "Creating the release branch"
                         git checkout -b "${env.CUSTOMRELEASEBRANCHNAME}" "${params.TAG}"
+                        git push origin ${env.CUSTOMRELEASEBRANCHNAME}
                         """
-                        withCredentials([usernamePassword(
-                            credentialsId: 'Kiran-hub01',
-                            usernameVariable: 'GIT_USERNAME',
-                            passwordVariable: 'GIT_PASSWORD'
-                            )]){
-                            sh
-                                """
-                                git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/Kiran-hub01/Demorepo.git ${env.CUSTOMRELEASEBRANCHNAME}
-                                """
-                        env.FINALRELEASEBRANCH = "${env.CUSTOMRELEASEBRANCHNAME}"
-                     }
+                     //    """
+                     //    withCredentials([usernamePassword(
+                     //        credentialsId: 'Kiran-hub01',
+                     //        usernameVariable: 'GIT_USERNAME',
+                     //        passwordVariable: 'GIT_PASSWORD'
+                     //        )]){
+                     //        sh
+                     //            """
+                     //            git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/Kiran-hub01/Demorepo.git ${env.CUSTOMRELEASEBRANCHNAME}
+                     //            """
+                     //    
+                     // }
+                         env.FINALRELEASEBRANCH = "${env.CUSTOMRELEASEBRANCHNAME}"
                      }
                     
                     // Fetch the associated tag
