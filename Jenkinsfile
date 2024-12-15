@@ -8,6 +8,7 @@ pipeline {
     }
     environment {
         CUSTOMRELEASEBRANCHNAME = "release-${params.TAG}"
+        git_creds = credentials('Kiran-hub01')
     }
     stages {
         stage('prepare') {
@@ -28,19 +29,12 @@ pipeline {
                          echo "${params.ReleaseBranch}"
                          env.FINALRELEASEBRANCH = "${params.ReleaseBranch}"
                      } else {
-                          withCredentials([usernamePassword(
-                            credentialsId: 'Kiran-hub01',
-                            usernameVariable: 'GIT_USERNAME',
-                            passwordVariable: 'GIT_PASSWORD'
-                            )]) {
                                 sh
                                     """
                                     echo "Creating the release branch"
                                     git checkout -b "${env.CUSTOMRELEASEBRANCHNAME}" "${params.TAG}"
                                     git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/Kiran-hub01/Demorepo.git ${env.CUSTOMRELEASEBRANCHNAME}
                                     """
-                        
-                                }
                         env.FINALRELEASEBRANCH = "${env.CUSTOMRELEASEBRANCHNAME}"
                      }
                     
