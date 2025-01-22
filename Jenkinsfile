@@ -15,17 +15,17 @@ pipeline {
             steps {
                 cleanWs()
                 checkout([
-                    $class: 'GitSCM',
-                    branches: branches: [[
-                        name: "refs/${params.Branch ? "heads/${params.ReleaseBranch}" : "tags/${params.TAG}"}"
-                    ]],
-                    doGenerateSubmoduleConfigurations: scm.doGenerateSubmoduleConfigurations,
-                    extensions: [[$class: 'CloneOption', noTags: false, reference: '', shallow: false]],
-                    userRemoteConfigs: [[
-                        url: 'https://github.com/Kiran-hub01/Demorepo.git',
-                        credentialsID: 'Kiran-hub01'
-                        ]]
-                ])
+    $class: 'GitSCM',
+    branches: [[
+        name: "refs/${params.DeployUsingReleaseBranch ? "heads/${params.ReleaseBranch}" : "tags/${params.TAG}"}"
+    ]],
+    doGenerateSubmoduleConfigurations: scm.doGenerateSubmoduleConfigurations,
+    extensions: [[$class: 'CloneOption', noTags: false, reference: '', shallow: false]],
+    userRemoteConfigs: [[
+        url: 'https://github.com/Kiran-hub01/Demorepo.git',
+        credentialsId: 'Kiran-hub01'
+    ]]
+])
                  script {
                      if (params.Branch) {
                          echo "${params.ReleaseBranch}"
